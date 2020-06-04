@@ -2,6 +2,7 @@ package nerdygadgets.appswing.views;
 
 import nerdygadgets.dal.Database;
 import nerdygadgets.dal.entities.Stock;
+import nerdygadgets.dal.repositories.StockRepository;
 import nerdygadgets.shared.Utility;
 
 import javax.swing.*;
@@ -11,14 +12,17 @@ import java.util.List;
 public class StockPanel extends AppPanel {
     private static final long serialVersionUID = 1L;
 
+    private StockRepository stockRepository;
+
     /**
      * Initializes a new instance of the StockPanel class
      */
     public StockPanel(Database database) {
         super(database);
+        stockRepository = new StockRepository(database);
         try {
             // haalt voorraad op van database
-            List<Stock> stocks = getDatabase().getStock();
+            List<Stock> stocks = stockRepository.getAll();
 
             // warning bij geen voorraad
             if (stocks.isEmpty()) {

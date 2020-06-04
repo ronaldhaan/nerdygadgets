@@ -3,6 +3,7 @@ package nerdygadgets.appswing.models;
 
 import nerdygadgets.appswing.views.*;
 import nerdygadgets.shared.Utility;
+import nerdygadgets.dal.repositories.*;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -31,10 +32,12 @@ public class AppTableAction extends AbstractAction {
 
                 if(panelName.equals(Utility.ORDER_DETAIL_PANEL_NAME)) {               
                     int id = getValue(table, modelRow, 0);
-                    panel = new OrderDetailPanel(appPanel.getDatabase().getOrderByID(id)); 
+                    OrderRepository repository = new OrderRepository(appPanel.getDatabase());
+                    panel = new OrderDetailPanel(appPanel.getDatabase(), repository.getOne(id)); 
                 } else {                 
                     int id = getValue(table, modelRow, 1);
-                    panel = new CustomerPanel(appPanel.getDatabase().getCustomerByID(id)); 
+                    CustomerRepository repository = new CustomerRepository(appPanel.getDatabase());
+                    panel = new CustomerPanel(appPanel.getDatabase(), repository.getOne(id)); 
                 }
                 // Add new panel to screen
                 appPanel.togglePanelListeners(panel);

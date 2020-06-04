@@ -4,6 +4,8 @@ import nerdygadgets.appswing.models.*;
 import nerdygadgets.dal.Database;
 import nerdygadgets.dal.entities.Order;
 import nerdygadgets.dal.entities.Orderline;
+import nerdygadgets.dal.repositories.OrderRepository;
+import nerdygadgets.dal.repositories.OrderLineRepository;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -22,11 +24,17 @@ public class OrderDetailPanel extends AppPanel implements ActionListener
     private JButton updateBtn;
     private JButton cancelBtn;
 
+    private OrderRepository orderRepository;
+    private OrderLineRepository orderLineRepository;
+
     /**
      * Initializes a new instance of the OrderDetailPanel class
      */
-    public OrderDetailPanel(Order order) {
-        super(null);
+    public OrderDetailPanel(Database database, Order order) {
+        super(database);
+        orderRepository = new OrderRepository(database);
+        orderLineRepository = new OrderLineRepository(database);
+
         // Show warning when there is no order
         if (order == null) {
             JOptionPane.showMessageDialog(this, "No order found", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -55,8 +63,7 @@ public class OrderDetailPanel extends AppPanel implements ActionListener
             panel2.setLayout(new GridLayout(0, 1));
 
             // Get orderlines by OrderID
-            Database database = new Database();
-            ArrayList<Orderline> orderlines = database.getOrderlinesByID(order.getOrderID());
+            ArrayList<Orderline> orderlines = orderLineRepository.getOne(order.getOrderID());
 
             // Column Names
             String[] cols = { "OrderLineID", "StockItemID", "StockItemName", "Quantity", "UnitPrice", "TaxRate" };
@@ -139,8 +146,7 @@ public class OrderDetailPanel extends AppPanel implements ActionListener
                 int id = Integer.parseInt(orderID.getText());
                 Date date = Date.valueOf(expectedDeliveryDate.getText());
 
-                Database database = new Database();
-                database.updateOrderByID(id, date);
+                orderRepository.update(id, date);
 
                 for (int count = 0; count < table.getRowCount(); count++){
                     int lineID = Integer.parseInt(table.getValueAt(count, 0).toString());
@@ -154,7 +160,7 @@ public class OrderDetailPanel extends AppPanel implements ActionListener
                     }
 
                     if (!error)
-                        database.updateOrderlineByID(lineID, quality, unitPrice, taxRate);
+                        orderLineRepository.update(lineID, quality, unitPrice, taxRate);
                 }
 
                 if (!error)
@@ -166,8 +172,7 @@ public class OrderDetailPanel extends AppPanel implements ActionListener
 
         if (e.getSource() == cancelBtn) {
             setVisible(false);
-            Database database = new Database();
-            togglePanelListeners(new OrderPanel(database));
+            togglePanelListeners(new OrderPanel(getDatabase()));
         }
     }
 }

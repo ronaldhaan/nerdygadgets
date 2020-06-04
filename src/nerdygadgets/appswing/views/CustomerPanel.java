@@ -2,6 +2,7 @@ package nerdygadgets.appswing.views;
 
 import nerdygadgets.dal.Database;
 import nerdygadgets.dal.entities.Customer;
+import nerdygadgets.dal.repositories.CustomerRepository;
 import nerdygadgets.shared.Utility;
 
 import javax.swing.*;
@@ -19,13 +20,16 @@ public class CustomerPanel extends AppPanel implements ActionListener {
     private JButton updateBtn;
     private JButton cancelBtn;
 
+    private CustomerRepository customerRepository;
+
 
     /**
      * @param customer Customer object
      *                 Initializes a new instance of the CustomerPanel class
      */
-    public CustomerPanel(Customer customer) {
-        super(null);
+    public CustomerPanel(Database database, Customer customer) {
+        super(database);
+        customerRepository = new CustomerRepository(database);
 
         try {
             setLayout(new GridLayout(10, 2));
@@ -93,6 +97,7 @@ public class CustomerPanel extends AppPanel implements ActionListener {
                 } else {
                     add(new JTextField(customerInfo));
                 }
+                break;
             default:
                 break;
         }
@@ -103,7 +108,6 @@ public class CustomerPanel extends AppPanel implements ActionListener {
 
         @Override
     public void actionPerformed(ActionEvent e) {
-        Database database = new Database();
         if ((JButton)e.getSource() == updateBtn) {
             try {
                 int id = Integer.parseInt(CustomerID.getText());
@@ -111,7 +115,7 @@ public class CustomerPanel extends AppPanel implements ActionListener {
                 String deliveryAddressLine2 = DeliveryAddressLine2.getText();
                 String deliveryPostalCode =  DeliveryPostalCode.getText();
 
-                if(database.updateCustomerByID(id, deliveryAddressLine1, deliveryAddressLine2, deliveryPostalCode)) {                    
+                if(customerRepository.update(id, deliveryAddressLine1, deliveryAddressLine2, deliveryPostalCode)) {                    
                     JOptionPane.showMessageDialog(this, "The customer with CustomerID: " + id + " has been successfully updated");
                 }
 
@@ -124,7 +128,7 @@ public class CustomerPanel extends AppPanel implements ActionListener {
 
         if ((JButton)e.getSource() == cancelBtn) {
             setVisible(false);
-            togglePanelListeners(new OrderPanel(database));
+            togglePanelListeners(new OrderPanel(getDatabase()));
         }
     }
 }

@@ -2,6 +2,8 @@ package nerdygadgets.appswing.views;
 
 import nerdygadgets.dal.Database;
 import nerdygadgets.dal.entities.*;
+import nerdygadgets.dal.repositories.CustomerRepository;
+import nerdygadgets.dal.repositories.OrderRepository;
 import nerdygadgets.shared.Utility;
 import nerdygadgets.algorithm.*;
 
@@ -16,9 +18,15 @@ public class HomePanel extends AppPanel {
     private JButton btnShowMaps;
     private JPanel routePanel;
     private JList<String> routeList;
+
+    private CustomerRepository customerRepository;
+    private OrderRepository orderRepository;
     
     public HomePanel(Database database) {
-        super(database);      
+        super(database);   
+        customerRepository = new CustomerRepository(database);
+        orderRepository = new OrderRepository(database);
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         btnGenerate = new JButton("Generate route");
@@ -39,7 +47,7 @@ public class HomePanel extends AppPanel {
      */
     private boolean generateRoute() {
         // Get orders
-        ArrayList<Order> orders = getDatabase().getOrders();
+        ArrayList<Order> orders = orderRepository.getAll();
 
         if (orders.isEmpty()) {
             Utility.handleUnexpectedException(new Exception("No orders found"), true, this);
@@ -49,7 +57,7 @@ public class HomePanel extends AppPanel {
             Node startNode = RouteManager.getNodeByPostalCodeAndPlace("8017 CA", "Campus 2, 8017 CA Zwolle");
             
             orders.forEach(order -> {
-                Customer customer = getDatabase().getCustomerByID(order.getCustomerID());
+                Customer customer = customerRepository.getOne(order.getCustomerID());
                 String postal = customer.getDeliveryPostalCode();
                 collection.add(RouteManager.getNodeByPostalCodeAndPlace(postal, customer.getAddress()));
             });
@@ -76,7 +84,7 @@ public class HomePanel extends AppPanel {
             nodeNames[i] = (i+1) + ". -> " + node.getName();
             i++;
         };        
-        routeList = new JList<String>(nodeNames);
+        routeList = new JList<>(nodeNames);
         routePanel.add(routeList);
     }
 

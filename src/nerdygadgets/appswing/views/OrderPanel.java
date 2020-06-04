@@ -2,6 +2,7 @@ package nerdygadgets.appswing.views;
 
 import nerdygadgets.dal.Database;
 import nerdygadgets.dal.entities.Order;
+import nerdygadgets.dal.repositories.OrderRepository;
 import nerdygadgets.appswing.helpers.ButtonColumn;
 import nerdygadgets.shared.Utility;
 import nerdygadgets.appswing.models.AppTableAction;
@@ -15,14 +16,17 @@ public class OrderPanel extends AppPanel
 {
     private static final long serialVersionUID = 1L;
 
+    private OrderRepository orderRepository;
+
     /**
      * Initializes a new instance of the OrderPanel class
      */
     public OrderPanel(Database database) {
         super(database);
+        orderRepository = new OrderRepository(database);
         try {
             // Get the orders from the database
-            List<Order> orders = getDatabase().getOrders();
+            List<Order> orders = orderRepository.getAll();
 
             // Show warning when there are no orders
             if (orders.isEmpty()) {
