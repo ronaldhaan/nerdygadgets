@@ -28,7 +28,7 @@ public class Database {
      * 
      * @exception Exception
      */
-    public Connection open() {
+    public Connection open() throws SQLException {
         try {
             Properties props = new Properties();
             props.setProperty("user", username);
@@ -37,9 +37,8 @@ public class Database {
             return DriverManager.getConnection(url, props);            
         } catch (SQLException e) {
             Utility.handleUnexpectedException(e);
+            throw e;
         } 
-
-        return null;
     }
 
 }

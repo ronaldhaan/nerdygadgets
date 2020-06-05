@@ -2,7 +2,7 @@ package nerdygadgets.dal.entities;
 
 import java.sql.Date;
 
-public class Customer {
+public class Customer extends Entity {
     private int customerID;
     private String customerName;
     private String phoneNumber;
@@ -10,6 +10,14 @@ public class Customer {
     private String deliveryAddressLine2;
     private String deliveryPostalCode;
     private Date accountOpenedDate;
+
+    public Customer(int customerID, String deliveryAddressLine1, String deliveryAddressLine2, String deliveryPostalCode) {
+        this(customerID, null, null, deliveryAddressLine1, deliveryAddressLine2, deliveryPostalCode, null);
+    }
+
+    public Customer() {
+
+    }
 
     /**
      * Initializes a new instance of the Customer class

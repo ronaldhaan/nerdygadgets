@@ -1,6 +1,6 @@
 package nerdygadgets.dal.entities;
 
-public class Orderline {
+public class OrderLine {
     private int orderLineID;
     private int orderID;
     private int stockItemID;
@@ -12,7 +12,14 @@ public class Orderline {
     /**
      * Initializes a new instance of the Orderline class
      */
-    public Orderline(int orderLineID, int orderID, int stockItemID, String stockItemName, int quantity, Double unitPrice, Double taxRate) {
+    public OrderLine(int orderLineID, int quantity, Double unitPrice, Double taxRate) {
+        this(orderLineID, -1, -1, null, quantity, unitPrice, taxRate);
+    }
+
+    /**     * 
+     * Initializes a new instance of the Orderline class
+     */
+    public OrderLine(int orderLineID, int orderID, int stockItemID, String stockItemName, int quantity, Double unitPrice, Double taxRate) {
         this.orderLineID = orderLineID;
         this.orderID = orderID;
         this.stockItemID = stockItemID;

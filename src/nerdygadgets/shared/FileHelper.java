@@ -29,7 +29,8 @@ public final class FileHelper {
 
         String logFilePath = "";
         try {
-            Path root = Paths.get(".").normalize().toAbsolutePath();
+
+            Path root = getRootFolder();
 
             File file = new File(root.toString() + "\\src\\log\\");
             if(!file.exists()) {
@@ -50,5 +51,9 @@ public final class FileHelper {
         } 
         
         return logFilePath;
+    }
+
+    public static Path getRootFolder() {
+        return Paths.get(".").normalize().toAbsolutePath();
     }
 }

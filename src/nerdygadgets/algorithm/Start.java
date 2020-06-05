@@ -1,6 +1,5 @@
 package nerdygadgets.algorithm;
 
-import nerdygadgets.dal.Database;
 import nerdygadgets.dal.entities.Customer;
 import nerdygadgets.dal.entities.Order;
 import nerdygadgets.dal.repositories.CustomerRepository;

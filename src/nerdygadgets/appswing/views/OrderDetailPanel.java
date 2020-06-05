@@ -3,7 +3,7 @@ package nerdygadgets.appswing.views;
 import nerdygadgets.appswing.models.*;
 import nerdygadgets.dal.Database;
 import nerdygadgets.dal.entities.Order;
-import nerdygadgets.dal.entities.Orderline;
+import nerdygadgets.dal.entities.OrderLine;
 import nerdygadgets.dal.repositories.OrderRepository;
 import nerdygadgets.dal.repositories.OrderLineRepository;
 
@@ -63,7 +63,7 @@ public class OrderDetailPanel extends AppPanel implements ActionListener
             panel2.setLayout(new GridLayout(0, 1));
 
             // Get orderlines by OrderID
-            ArrayList<Orderline> orderlines = orderLineRepository.getOne(order.getOrderID());
+            ArrayList<OrderLine> orderlines = orderLineRepository.getLinesByOrderID(order.getOrderID());
 
             // Column Names
             String[] cols = { "OrderLineID", "StockItemID", "StockItemName", "Quantity", "UnitPrice", "TaxRate" };
@@ -77,7 +77,7 @@ public class OrderDetailPanel extends AppPanel implements ActionListener
             panel2.add(sp);
 
             // Adding the orderlines to the table
-            for (Orderline orderline : orderlines) {
+            for (OrderLine orderline : orderlines) {
                 tableModel.addRow(orderline.asArray());
             }
 
@@ -136,19 +136,30 @@ public class OrderDetailPanel extends AppPanel implements ActionListener
             break;
         }
     }
-
-
+ 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == updateBtn) {
-            try {
-                boolean error = false;
-                int id = Integer.parseInt(orderID.getText());
-                Date date = Date.valueOf(expectedDeliveryDate.getText());
+           updateBtnPerformed();
+        }
 
-                orderRepository.update(id, date);
+        if (e.getSource() == cancelBtn) {
+            setVisible(false);
+            togglePanelListeners(new OrderPanel(getDatabase()));
+        }
+    }
 
-                for (int count = 0; count < table.getRowCount(); count++){
+    /**
+     * Performes the action of the update button
+     */
+    private void updateBtnPerformed() {
+        try {
+            boolean error = false;
+            int id = Integer.parseInt(orderID.getText());
+            Date date = Date.valueOf(expectedDeliveryDate.getText());
+
+            if(orderRepository.update(id, date)) {
+                for (int count = 0; count < table.getRowCount(); count++) {
                     int lineID = Integer.parseInt(table.getValueAt(count, 0).toString());
                     int quality = Integer.parseInt(table.getValueAt(count, 3).toString());
                     double unitPrice = Double.parseDouble(table.getValueAt(count, 4).toString());
@@ -165,14 +176,9 @@ public class OrderDetailPanel extends AppPanel implements ActionListener
 
                 if (!error)
                     JOptionPane.showMessageDialog(this, "The order with OrderID: " + id + " has been successfully updated");
-            } catch (IllegalArgumentException exception) {
-                JOptionPane.showMessageDialog(this, "Some fields contain invalid input. Please check the form for typos or missing values", "Warning", JOptionPane.WARNING_MESSAGE);
             }
-        }
-
-        if (e.getSource() == cancelBtn) {
-            setVisible(false);
-            togglePanelListeners(new OrderPanel(getDatabase()));
+        } catch (IllegalArgumentException exception) {
+            JOptionPane.showMessageDialog(this, "Some fields contain invalid input. Please check the form for typos or missing values", "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }
 }
