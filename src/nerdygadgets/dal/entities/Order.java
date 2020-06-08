@@ -2,7 +2,7 @@ package nerdygadgets.dal.entities;
 
 import java.sql.Date;
 
-public class Order {
+public class Order implements Entity {
     private int orderID;
     private int customerID;
     private Date orderDate;
@@ -12,9 +12,7 @@ public class Order {
      * Initializes a new instance of the Order class
      */
     public Order(int orderID, int customerID, Date orderDate) {
-        this.orderID = orderID;
-        this.customerID = customerID;
-        this.orderDate = orderDate;
+        this(orderID, customerID, orderDate, null);
     }
 
     /**
@@ -31,7 +29,7 @@ public class Order {
      * Get orderID from instance
      * @return orderID
      */
-    public int getOrderID() {
+    public int getId() {
         return orderID;
     }
 
@@ -64,6 +62,6 @@ public class Order {
      * @return orderID, customerID, expectedDeliveryDate
      */
     public Object[] asArray() {
-        return new Object[] { getOrderID(), getCustomerID(), getOrderDate()};
+        return new Object[] { getId(), getCustomerID(), getOrderDate()};
     }
 }

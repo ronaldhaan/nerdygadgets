@@ -4,6 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import nerdygadgets.shared.Utility;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -32,8 +34,8 @@ public class Postal {
             JSONObject annotations = getObjectByKey(results, "annotations");
             coordinates = annotations.getJSONObject("Mercator");
             coordinates.put("place", place);
-        } catch (IOException e) {
-            System.out.println(e.toString());
+        }  catch (Exception e) {
+            Utility.handleUnexpectedException(e);
         }
 
         return coordinates;

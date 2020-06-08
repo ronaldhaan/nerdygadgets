@@ -2,7 +2,7 @@ package nerdygadgets.dal.entities;
 
 import java.sql.Date;
 
-public class Customer extends Entity {
+public class Customer implements Entity {
     private int customerID;
     private String customerName;
     private String phoneNumber;
@@ -13,10 +13,6 @@ public class Customer extends Entity {
 
     public Customer(int customerID, String deliveryAddressLine1, String deliveryAddressLine2, String deliveryPostalCode) {
         this(customerID, null, null, deliveryAddressLine1, deliveryAddressLine2, deliveryPostalCode, null);
-    }
-
-    public Customer() {
-
     }
 
     /**
@@ -36,7 +32,7 @@ public class Customer extends Entity {
      * Get customerID from instance
      * @return customerID
      */
-    public int getCustomerID() {
+    public int getId() {
         return customerID;
     }
 

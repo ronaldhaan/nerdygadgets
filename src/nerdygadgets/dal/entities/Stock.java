@@ -1,6 +1,6 @@
 package nerdygadgets.dal.entities;
 
-public class Stock {
+public class Stock implements Entity {
     private int stockItemID;
     private int quantityOnHand;
     private String stockItemName;
@@ -18,7 +18,7 @@ public class Stock {
      * Get stockItemID from instance
      * @return stockItemID
      */
-    public int getStockItemID() { return stockItemID; }
+    public int getId() { return stockItemID; }
 
     /**
      * Get quantityOnHand from instance
@@ -36,5 +36,5 @@ public class Stock {
      * Get array from instance
      * @return stockItemID, quantityOnHand, stockItemName
      */
-    public Object[] asArray () { return new Object[] {getStockItemID(), getQuantityOnHand(), getStockItemName() }; }
+    public Object[] asArray () { return new Object[] {getId(), getQuantityOnHand(), getStockItemName() }; }
 }

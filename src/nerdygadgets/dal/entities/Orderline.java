@@ -1,6 +1,6 @@
 package nerdygadgets.dal.entities;
 
-public class OrderLine {
+public class OrderLine implements Entity {
     private int orderLineID;
     private int orderID;
     private int stockItemID;
@@ -41,7 +41,7 @@ public class OrderLine {
      * Get orderLineID from instance
      * @return orderLineID
      */
-    public int getOrderLineID() {
+    public int getId() {
         return orderLineID;
     }
 
@@ -90,6 +90,6 @@ public class OrderLine {
      * @return orderLineID, stockItemID, stockItemName
      */
     public Object[] asArray() {
-        return new Object[] { getOrderLineID(), getStockItemID(), getStockItemName(), getQuantity(), getUnitPrice(), getTaxRate() };
+        return new Object[] { getId(), getStockItemID(), getStockItemName(), getQuantity(), getUnitPrice(), getTaxRate() };
     }
 }

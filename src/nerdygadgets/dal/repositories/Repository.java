@@ -1,11 +1,11 @@
 package nerdygadgets.dal.repositories;
 
-import java.lang.reflect.*;
 import java.util.ArrayList;
 
 import nerdygadgets.dal.Database;
+import nerdygadgets.dal.entities.Entity;
 
-public abstract class Repository<T> {       
+public abstract class Repository<T extends Entity> {       
     private Database connection;
 
     public Repository(Database connection) {

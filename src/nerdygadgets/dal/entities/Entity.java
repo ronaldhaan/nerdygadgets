@@ -1,5 +1,5 @@
 package nerdygadgets.dal.entities;
 
-public class Entity {
-    private int Id;
+public interface Entity {
+    int getId();
 }

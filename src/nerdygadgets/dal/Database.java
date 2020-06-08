@@ -38,7 +38,7 @@ public class Database {
         } catch (SQLException e) {
             Utility.handleUnexpectedException(e);
             throw e;
-        } 
+        }
     }
 
 }

@@ -35,8 +35,8 @@ public class CustomerRepository extends Repository<Customer> {
     public Customer getOne(int id) {
         Customer customer = null;
         try (Connection connection = getConnection().open()) {
-            try (PreparedStatement statement = connection
-                    .prepareStatement("SELECT * FROM customers WHERE CustomerID = ?;")) {
+            String query = "SELECT * FROM customers WHERE CustomerID = ?;";
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setInt(1, id);
 
                 try (ResultSet rs = statement.executeQuery()) {
@@ -57,11 +57,15 @@ public class CustomerRepository extends Repository<Customer> {
 
 
     public boolean update(int id, Customer entity) {
-        if(entity != null && id == entity.getCustomerID()) {
+        if(entity != null && id == entity.getId()) {
             try (Connection connection = getConnection().open()) {
-                try (PreparedStatement statement = connection.prepareStatement(
-                        "UPDATE customers SET DeliveryAddressLine1 = ?, DeliveryAddressLine2 = ?, DeliveryPostalCode = ? WHERE CustomerID = ?;")) {
-    
+                String query = "UPDATE customers" +
+                                "SET DeliveryAddressLine1 = ?," +
+                                    "DeliveryAddressLine2 = ?," +
+                                    "DeliveryPostalCode = ? " +
+                                "WHERE CustomerID = ?;";
+
+                try (PreparedStatement statement = connection.prepareStatement(query)) {    
                     statement.setString(1, entity.getDeliveryAddressLine1());
                     statement.setString(2, entity.getDeliveryAddressLine2());
                     statement.setString(3, entity.getDeliveryPostalCode());
@@ -81,12 +85,9 @@ public class CustomerRepository extends Repository<Customer> {
     public boolean update(int id, String deliveryAddressLine1, String deliveryAddressLine2, String deliveryPostalCode) {
         return update(id, new Customer(
             id,
-            null,
-            null,
             deliveryAddressLine1,
             deliveryAddressLine2,
-            deliveryPostalCode,
-            null
+            deliveryPostalCode
         ));
     }
 

@@ -48,7 +48,7 @@ public class OrderDetailPanel extends AppPanel implements ActionListener
             panel1.setBorder(BorderFactory.createEmptyBorder(0, 0, 50, 0));
 
             String[][] labels = {
-                    { "OrderID:", String.valueOf(order.getOrderID()), "Label"},
+                    { "OrderID:", String.valueOf(order.getId()), "Label"},
                     { "CustomerID:", String.valueOf(order.getCustomerID()), "Label"},
                     { "OrderDate:", String.valueOf(order.getOrderDate()), "Label"},
                     { "ExpectedDeliveryDate:", String.valueOf(order.getExpectedDeliveryDate()), "Textfield"}
@@ -63,7 +63,7 @@ public class OrderDetailPanel extends AppPanel implements ActionListener
             panel2.setLayout(new GridLayout(0, 1));
 
             // Get orderlines by OrderID
-            ArrayList<OrderLine> orderlines = orderLineRepository.getLinesByOrderID(order.getOrderID());
+            ArrayList<OrderLine> orderlines = orderLineRepository.getLinesByOrderID(order.getId());
 
             // Column Names
             String[] cols = { "OrderLineID", "StockItemID", "StockItemName", "Quantity", "UnitPrice", "TaxRate" };
