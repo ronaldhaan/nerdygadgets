@@ -12,6 +12,11 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class Postal {
+
+    private Postal() {
+
+    }
+
     /**
      * Get coordinates by postal and place
      *
@@ -31,9 +36,12 @@ public class Postal {
             InputStream inputStream = conn.getInputStream();
             JSONObject jsonObject = new JSONObject(new JSONTokener(inputStream));
             JSONArray results = jsonObject.getJSONArray("results");
+            
             JSONObject annotations = getObjectByKey(results, "annotations");
-            coordinates = annotations.getJSONObject("Mercator");
-            coordinates.put("place", place);
+            if(annotations != null) {
+                coordinates = annotations.getJSONObject("Mercator");
+                coordinates.put("place", place);
+            }
         }  catch (Exception e) {
             Utility.handleUnexpectedException(e);
         }

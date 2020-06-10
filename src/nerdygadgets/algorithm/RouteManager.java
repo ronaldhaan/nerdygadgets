@@ -235,7 +235,7 @@ public class RouteManager {
     
     public void openRouteInMaps() {
         try {            
-            String url = Utility.GOOGLE_MAPS_URL + getNodesAsPath();
+            String url = Utility.googleMapsUrl + getNodesAsPath();
             Runtime.getRuntime().exec(new String[]{"cmd", "/c","start chrome /incognito " + url});
         } catch(Exception e) {
             Utility.handleUnexpectedException(e);

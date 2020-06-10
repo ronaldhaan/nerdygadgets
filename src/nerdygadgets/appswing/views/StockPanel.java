@@ -1,9 +1,9 @@
 package nerdygadgets.appswing.views;
 
+import nerdygadgets.appswing.SwingUtility;
 import nerdygadgets.dal.Database;
 import nerdygadgets.dal.entities.Stock;
 import nerdygadgets.dal.repositories.StockRepository;
-import nerdygadgets.shared.Utility;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -13,6 +13,7 @@ public class StockPanel extends AppPanel {
     private static final long serialVersionUID = 1L;
 
     private StockRepository stockRepository;
+    private SwingUtility utility = new SwingUtility();
 
     /**
      * Initializes a new instance of the StockPanel class
@@ -27,7 +28,7 @@ public class StockPanel extends AppPanel {
             // warning bij geen voorraad
             if (stocks.isEmpty()) {
                 String message = "No stock found";
-                Utility.handleUnexpectedException(new Exception(message), true, this);
+                utility.handleUnexpectedException(new Exception(message), true, this);
             } else {
                 // column names
                 String[] cols = {"StockItemID", "Quantity", "StockItemName"};
@@ -51,7 +52,7 @@ public class StockPanel extends AppPanel {
                 setVisible(true);
             }
         } catch (Exception e) {
-            Utility.handleUnexpectedException(e);
+            utility.handleUnexpectedException(e);
 
         }
     }

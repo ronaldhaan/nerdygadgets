@@ -36,7 +36,7 @@ public class Database {
             
             return DriverManager.getConnection(url, props);            
         } catch (SQLException e) {
-            Utility.handleUnexpectedException(e);
+            System.err.println(e);
             throw e;
         }
     }

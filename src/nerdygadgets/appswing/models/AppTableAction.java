@@ -24,13 +24,13 @@ public class AppTableAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         try {                        
-            if(panelName.equals(Utility.ORDER_DETAIL_PANEL_NAME) || panelName.equals(Utility.CUSTOMER_PANEL_NAME)) {
+            if(panelName.equals(Utility.orderDetailPanelName) || panelName.equals(Utility.customerPanelName)) {
                 JTable table = (JTable)e.getSource();
                 int modelRow = Integer.parseInt( e.getActionCommand() );
 
                 AppPanel panel;
 
-                if(panelName.equals(Utility.ORDER_DETAIL_PANEL_NAME)) {               
+                if(panelName.equals(Utility.orderDetailPanelName)) {               
                     int id = getValue(table, modelRow, 0);
                     OrderRepository repository = new OrderRepository(appPanel.getDatabase());
                     panel = new OrderDetailPanel(appPanel.getDatabase(), repository.getOne(id)); 
