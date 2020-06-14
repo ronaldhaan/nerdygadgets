@@ -19,8 +19,6 @@ import java.util.Map;
 public class AppScreen extends JFrame implements PanelListener, MouseInputListener {
     private static final long serialVersionUID = 1L;
 
-    private SwingUtility utility = new SwingUtility();
-
     private JMenuBar appMenuBar; 
 
     private AppPanel panelContent;
@@ -30,7 +28,7 @@ public class AppScreen extends JFrame implements PanelListener, MouseInputListen
     public AppScreen() {
         // Initializing the JFrame
         setTitle("NerdyGadgets");
-        setSize(utility.getScreenSize());
+        setSize(Utility.getScreenSize());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
 
@@ -106,7 +104,7 @@ public class AppScreen extends JFrame implements PanelListener, MouseInputListen
                         newPanel = null;
                         // The key is not a registered menu item.
                         String message = "Panel " + x.getKey() + " not found";
-                        utility.handleUnexpectedException(new Exception(message));
+                        SwingUtility.handleUnexpectedException(new Exception(message));
                     break;
                 }
 

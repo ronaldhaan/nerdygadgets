@@ -13,7 +13,6 @@ public class StockPanel extends AppPanel {
     private static final long serialVersionUID = 1L;
 
     private StockRepository stockRepository;
-    private SwingUtility utility = new SwingUtility();
 
     /**
      * Initializes a new instance of the StockPanel class
@@ -28,7 +27,7 @@ public class StockPanel extends AppPanel {
             // warning bij geen voorraad
             if (stocks.isEmpty()) {
                 String message = "No stock found";
-                utility.handleUnexpectedException(new Exception(message), true, this);
+                SwingUtility.handleUnexpectedException(new Exception(message), true, this);
             } else {
                 // column names
                 String[] cols = {"StockItemID", "Quantity", "StockItemName"};
@@ -52,7 +51,7 @@ public class StockPanel extends AppPanel {
                 setVisible(true);
             }
         } catch (Exception e) {
-            utility.handleUnexpectedException(e);
+            SwingUtility.handleUnexpectedException(e);
 
         }
     }

@@ -9,8 +9,6 @@ import nerdygadgets.shared.Utility;
 public class ReturnPanel extends AppPanel {
     private static final long serialVersionUID = 1L;
 
-    private SwingUtility utility = new SwingUtility();
-
     /**
      * Initializes a new instance of the ReturnPanel class
      */
@@ -23,7 +21,7 @@ public class ReturnPanel extends AppPanel {
             setVisible(true);
 
         } catch(Exception e) {
-            utility.handleUnexpectedException(e);
+            SwingUtility.handleUnexpectedException(e);
         }
     }
 }

@@ -1,5 +1,6 @@
 package nerdygadgets.appswing.views;
 
+import nerdygadgets.appswing.SwingUtility;
 import nerdygadgets.dal.Database;
 import nerdygadgets.dal.entities.Customer;
 import nerdygadgets.dal.repositories.CustomerRepository;
@@ -27,7 +28,7 @@ public class CustomerPanel extends AppPanel implements ActionListener {
      * @param customer Customer object
      *                 Initializes a new instance of the CustomerPanel class
      */
-    public CustomerPanel(final Database database, final Customer customer) {
+    public CustomerPanel(Database database, Customer customer) {
         super(database);
         customerRepository = new CustomerRepository(database);
 
@@ -51,7 +52,7 @@ public class CustomerPanel extends AppPanel implements ActionListener {
             // Set screen to visible
             setVisible(true);
         } catch (final Exception e) {
-            Utility.handleUnexpectedException(e);
+            SwingUtility.handleUnexpectedException(e);
         }
         updateBtn = new JButton("Update");
         add(updateBtn);
@@ -121,7 +122,7 @@ public class CustomerPanel extends AppPanel implements ActionListener {
             } catch (final IllegalArgumentException exception) {
                 JOptionPane.showMessageDialog(this, "Some fields contain invalid input. Please check the form for typos or missing values", "Warning", JOptionPane.WARNING_MESSAGE);
             } catch (final Exception ex) {
-                Utility.handleUnexpectedException(ex, true, this );
+                SwingUtility.handleUnexpectedException(ex, true, this );
             }
         }
 

@@ -4,7 +4,7 @@ import nerdygadgets.dal.Database;
 import nerdygadgets.dal.entities.*;
 import nerdygadgets.dal.repositories.CustomerRepository;
 import nerdygadgets.dal.repositories.OrderRepository;
-import nerdygadgets.shared.Utility;
+import nerdygadgets.appswing.SwingUtility;
 import nerdygadgets.algorithm.*;
 
 import javax.swing.*;
@@ -50,7 +50,7 @@ public class HomePanel extends AppPanel {
         ArrayList<Order> orders = orderRepository.getAll();
 
         if (orders.isEmpty()) {
-            Utility.handleUnexpectedException(new Exception("No orders found"), true, this);
+            SwingUtility.handleUnexpectedException(new Exception("No orders found"), true, this);
         } else {
             NodeCollection collection = new NodeCollection();
 

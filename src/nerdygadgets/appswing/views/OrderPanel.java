@@ -18,7 +18,6 @@ public class OrderPanel extends AppPanel
     private static final long serialVersionUID = 1L;
 
     private OrderRepository orderRepository;
-    private SwingUtility utility = new SwingUtility();
 
     /**
      * Initializes a new instance of the OrderPanel class
@@ -33,7 +32,7 @@ public class OrderPanel extends AppPanel
             // Show warning when there are no orders
             if (orders.isEmpty()) {
                 String message = "No orders found";
-                utility.handleUnexpectedException(new Exception(message), true, this);
+                SwingUtility.handleUnexpectedException(new Exception(message), true, this);
             } else {
                 // Column Names
                 String[] cols = { "OrderID", "CustomerID", "OrderDate" };
@@ -73,7 +72,7 @@ public class OrderPanel extends AppPanel
             }
         }
         catch(Exception e) {
-            utility.handleUnexpectedException(e);
+            SwingUtility.handleUnexpectedException(e);
         }
     }
 }
