@@ -4,7 +4,6 @@ import nerdygadgets.appswing.SwingUtility;
 import nerdygadgets.dal.Database;
 import nerdygadgets.dal.entities.Customer;
 import nerdygadgets.dal.repositories.CustomerRepository;
-import nerdygadgets.shared.Utility;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,13 +44,13 @@ public class CustomerPanel extends AppPanel implements ActionListener {
                     {"AccountOpenedDate:", String.valueOf(customer.getAccountOpenedDate()), "Label"}
             };
 
-            for (final String[] label : labels) {
+            for (String[] label : labels) {
                 addLabels(label);
             }
 
             // Set screen to visible
             setVisible(true);
-        } catch (final Exception e) {
+        } catch (Exception e) {
             SwingUtility.handleUnexpectedException(e);
         }
         updateBtn = new JButton("Update");
@@ -66,11 +65,11 @@ public class CustomerPanel extends AppPanel implements ActionListener {
 
     }
 
-    public void addLabels(final String[] labels) {
+    public void addLabels(String[] labels) {
         addLabels(labels[0], labels[1], labels[2]);
     }
 
-    public void addLabels(final String label, final String customerInfo, final String component) {
+    public void addLabels(String label, String customerInfo, String component) {
         add(new JLabel(label));
 
         switch (component) {
@@ -105,7 +104,7 @@ public class CustomerPanel extends AppPanel implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(final ActionEvent e) {
+    public void actionPerformed(ActionEvent e) {
         if ((JButton)e.getSource() == updateBtn) {
             try {
                 Customer customer = new Customer(
@@ -119,9 +118,9 @@ public class CustomerPanel extends AppPanel implements ActionListener {
                     JOptionPane.showMessageDialog(this, "The customer with CustomerID: " + customer.getId() + " has been successfully updated");
                 }
 
-            } catch (final IllegalArgumentException exception) {
+            } catch (IllegalArgumentException exception) {
                 JOptionPane.showMessageDialog(this, "Some fields contain invalid input. Please check the form for typos or missing values", "Warning", JOptionPane.WARNING_MESSAGE);
-            } catch (final Exception ex) {
+            } catch (Exception ex) {
                 SwingUtility.handleUnexpectedException(ex, true, this );
             }
         }

@@ -10,6 +10,14 @@ public class Node {
     private int y;
     private String name;
 
+    public Node(double x, double y) {
+        this((int)x, (int)y);
+    }
+
+    public Node(double x, double y, String place) {
+        this((int)x, (int)y, place);
+    }
+    
     public Node(int x, int y) {
         this(x, y, "");
     }

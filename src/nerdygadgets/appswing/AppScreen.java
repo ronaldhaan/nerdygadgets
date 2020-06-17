@@ -2,9 +2,9 @@ package nerdygadgets.appswing;
 
 import nerdygadgets.dal.Database;
 import nerdygadgets.appswing.enums.MenuItemLabels;
-import nerdygadgets.shared.Utility;
 import nerdygadgets.appswing.interfaces.PanelListener;
 import nerdygadgets.appswing.views.*;
+import nerdygadgets.shared.Utility;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;

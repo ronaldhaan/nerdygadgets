@@ -1,6 +1,6 @@
 package nerdygadgets.appswing.views;
-
 import nerdygadgets.appswing.SwingUtility;
+
 import nerdygadgets.dal.Database;
 import nerdygadgets.dal.entities.Stock;
 import nerdygadgets.dal.repositories.StockRepository;
@@ -20,6 +20,7 @@ public class StockPanel extends AppPanel {
     public StockPanel(Database database) {
         super(database);
         stockRepository = new StockRepository(database);
+
         try {
             // haalt voorraad op van database
             List<Stock> stocks = stockRepository.getAll();
@@ -52,7 +53,6 @@ public class StockPanel extends AppPanel {
             }
         } catch (Exception e) {
             SwingUtility.handleUnexpectedException(e);
-
         }
     }
 }

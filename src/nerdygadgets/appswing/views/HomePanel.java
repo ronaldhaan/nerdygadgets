@@ -9,6 +9,7 @@ import nerdygadgets.algorithm.*;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.awt.event.ActionEvent;
 
 public class HomePanel extends AppPanel {
     private static final long serialVersionUID = 1L;
@@ -52,14 +53,15 @@ public class HomePanel extends AppPanel {
         if (orders.isEmpty()) {
             SwingUtility.handleUnexpectedException(new Exception("No orders found"), true, this);
         } else {
-            NodeCollection collection = new NodeCollection();
-
             Node startNode = RouteManager.getNodeByPostalCodeAndPlace("8017 CA", "Campus 2, 8017 CA Zwolle");
+            
+            NodeCollection collection = new NodeCollection();
             
             orders.forEach(order -> {
                 Customer customer = customerRepository.getOne(order.getCustomerID());
                 String postal = customer.getDeliveryPostalCode();
                 collection.add(RouteManager.getNodeByPostalCodeAndPlace(postal, customer.getAddress()));
+                
             });
 
             collection.add(startNode);
@@ -77,13 +79,15 @@ public class HomePanel extends AppPanel {
      * Sets the generated route on the frame.
      */
     private void setRouteOnFrame() {
+        routePanel.remove(routeList);
         String[] nodeNames = new String[manager.getNodes().size()];
 
         int i = 0;
         for (Node node : manager.getNodes()) {
             nodeNames[i] = (i+1) + ". -> " + node.getName();
             i++;
-        };        
+        }
+
         routeList = new JList<>(nodeNames);
         routePanel.add(routeList);
     }
@@ -95,15 +99,14 @@ public class HomePanel extends AppPanel {
             private static final long serialVersionUID = 1L;
 
             @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                JButton btnGenerate = (JButton)e.getSource();
-                btnGenerate.setEnabled(false);
+            public void actionPerformed(ActionEvent e) {
+                JButton buttonGenerate = (JButton)e.getSource();
+                buttonGenerate.setEnabled(false);
                 routePanel.removeAll();
                 boolean success = generateRoute();
-                btnGenerate.setEnabled(true);
+                buttonGenerate.setEnabled(true);
                 btnShowMaps.setVisible(success);
-            }
-            
+            }            
         };
     }
 
@@ -112,7 +115,7 @@ public class HomePanel extends AppPanel {
             private static final long serialVersionUID = 1L;
 
             @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 manager.openRouteInMaps();
             }            
         };

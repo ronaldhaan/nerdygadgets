@@ -4,7 +4,6 @@ import javax.swing.*;
 
 import nerdygadgets.appswing.SwingUtility;
 import nerdygadgets.dal.Database;
-import nerdygadgets.shared.Utility;
 
 public class ReturnPanel extends AppPanel {
     private static final long serialVersionUID = 1L;

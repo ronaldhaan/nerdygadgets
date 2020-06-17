@@ -37,6 +37,17 @@ public class RouteManager {
             nodeCollection.add(new Node(coordinate[0], coordinate[1]));
         }
     }
+    
+    /**
+     * Initializes a new instance of the RouteManager class.
+     * 
+     * @param coordinates
+     */
+    public RouteManager(double[][] coordinates) {
+        for(double[] coordinate : coordinates) {
+            nodeCollection.add(new Node(coordinate[0], coordinate[1]));
+        }
+    }
 
     /**
      * Initializes a new instance of the RouteManager class.
@@ -77,6 +88,16 @@ public class RouteManager {
      * @return true, successfull. false otherwise
      */
     public boolean setStartNode(int[] coordinate) {
+        return setStartNode(new Node(coordinate[0], coordinate[1]));
+    }
+
+    /**
+     * Sets the start node based on the coordinates.
+     * 
+     * @param coordinate
+     * @return true, successfull. false otherwise
+     */
+    public boolean setStartNode(double[] coordinate) {
         return setStartNode(new Node(coordinate[0], coordinate[1]));
     }
 
@@ -154,10 +175,8 @@ public class RouteManager {
 
     public static Node getNodeByPostalCodeAndPlace(String postalCode, String place) {
         JSONObject coordinates = Postal.getCoordinatesByPostalAndPlace(postalCode, place);
-        double doubleX = (double) coordinates.get("x");
-        double doubleY = (double) coordinates.get("y");
-        int x = (int) doubleX;
-        int y = (int) doubleY;
+        double x = (double) coordinates.get("x");
+        double y = (double) coordinates.get("y");
 
         // Create and add our cities
         return new Node(x, y, place);
@@ -170,7 +189,7 @@ public class RouteManager {
      * @param startNode
      */
     private void createRoute(Node startNode) {
-        createRoute(new ArrayList<Node>(), startNode, 0);
+        createRoute(new ArrayList<>(), startNode, 0);
     }
 
     /**
